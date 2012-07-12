@@ -38,8 +38,8 @@
 		 result in the "build.dir" -->
 	<target name="compile">
 		<mkdir dir="${classes.dir}" />
-		<javac srcdir="${lib.dir}" destdir="${classes.dir}" classpathref="classpath" fork="yes" executable="${rcx.bin.dir}/lejosjc" source="1.2" includeantruntime="false" />
-		<javac srcdir="${bin.dir}" destdir="${classes.dir}" classpathref="classpath" fork="yes" executable="${rcx.bin.dir}/lejosjc" source="1.2" includeantruntime="false" />
+		<javac srcdir="${lib.dir}" destdir="${classes.dir}" classpathref="classpath" fork="yes" source="1.2" includeantruntime="false" />
+		<javac srcdir="${bin.dir}" destdir="${classes.dir}" classpathref="classpath" fork="yes" source="1.2" includeantruntime="false" />
 	</target>
 
 	<!-- Upload the generated binary to the Lego Tower (and thus to
