@@ -1,0 +1,8 @@
+# Ignore output file
+tmp.bin
+
+# Ignore java complied classes
+*.class
+
+# Ignore anything in the build directory
+build/*

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Turner" default="build" basedir=".">
+
+	<!-- Source files can be found under -->
+	<property name="lib.dir" value="lib" />
+	<property name="bin.dir" value="bin" />
+
+	<!-- Utility directories -->
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+
+	<!-- The class with the main() function is ... -->
+	<property name="main-class" value="Turner" />
+
+	<!--
+		Everything under here should be generic: ONLY
+    	change this if you REALLY know what you are doing
+-->
+
+	<!-- Ant build helpers live in here -->
+	<property name="ant.dir" value="ant" />
+
+	<!-- Set to the location of the leJOS files -->
+	<property name="rcx.jar.dir" value="/opt/lejos/lib" />
+	<property name="rcx.bin.dir" value="/opt/lejos/bin" />
+
+	<!-- Add the necessary libraries to the class path -->
+	<path id="classpath">
+		<fileset dir="${rcx.jar.dir}" includes="**/*.jar" />
+	</path>
+
+	<!-- Remove all the generated class files and other binaries -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- Make the library code, then the core binaries, and put the
+		 result in the "build.dir" -->
+	<target name="compile">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${lib.dir}" destdir="${classes.dir}" classpathref="classpath" fork="yes" executable="${rcx.bin.dir}/lejosjc" source="1.2" includeantruntime="false" />
+		<javac srcdir="${bin.dir}" destdir="${classes.dir}" classpathref="classpath" fork="yes" executable="${rcx.bin.dir}/lejosjc" source="1.2" includeantruntime="false" />
+	</target>
+
+	<!-- Upload the generated binary to the Lego Tower (and thus to
+		 to the RCX unit) -->
+	<target name="upload" depends="compile">
+		<exec executable="${rcx.bin.dir}/lejos" dir="${classes.dir}">
+			<arg value="${main-class}" />
+		</exec>
+		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true" />
+	</target>
+
+	<!-- Build everything and upload if the build is clean -->
+	<target name="build" depends="compile,upload" />
+
+	<!-- Just build everything. Eclipse should use this task: it
+	     means we don't try to upload everything on autocompile -->
+	<target name="build-only" depends="compile" />
+
+</project>

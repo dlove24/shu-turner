@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="src" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4"/>
+	<classpathentry kind="lib" path="/opt/lejos/lib/classes.jar"/>
+	<classpathentry kind="lib" path="/opt/lejos/lib/jtools.jar"/>
+	<classpathentry kind="lib" path="/opt/lejos/lib/pcrcxcomm.jar"/>
+	<classpathentry kind="lib" path="/opt/lejos/lib/rcxcomm.jar"/>
+	<classpathentry kind="lib" path="/opt/lejos/lib/vision.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
