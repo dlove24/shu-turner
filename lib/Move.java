@@ -36,65 +36,75 @@ import josx.platform.rcx.*;
  */
 
 public class Move {
-	/**
-	 ** Class Types
-	 */
+	///
+	/// Class Types
+	///
 
-	/**
-	 ** Class Variables
-	 */
+	///
+	/// Class Variables
+	///
 
-	/**
-	 ** Private methods
-	 */
+	///
+	/// Private methods
+	///
 
-	/* Move Forward */
+	/** Move Forward */
 	private static void motorForward() {
 		Motor.C.backward();
 	}
 
+	/** Stop all movement */
 	private static void motorStop() {
 		Motor.C.stop();
 	}
 
-	/* Move Backward */
+	/** Move Backward */
 	private static void motorBackward() {
 		Motor.C.forward();
 	}
 
-	/**
-	 ** Public methods
-	 */
+	///
+	/// Public methods
+	//
 
-	/* Move forward for 'seconds' */
+	/** Move forward for 'seconds' */
 	public static void forward(int seconds) {
 		motorForward();
 
 		try {
 			Thread.sleep(seconds * 1000);
 		} catch (InterruptedException e) {
-			/* Not sure where the motor is now !! */
+			/* Indicate something went wrong */
+			Sound.systemSound(false, 4);
 		}
 
 		motorStop();
 	}
 
-	/* Turn hard left for 'seconds' */
+	/** Turn hard left for 'seconds' */
 	public static void backward(int seconds) {
 		motorBackward();
 
 		try {
 			Thread.sleep(seconds * 1000);
 		} catch (InterruptedException e) {
-			/* Not sure where the motor is now !! */
+			/* Indicate something went wrong */
+			Sound.systemSound(false, 4);
 		}
 
 		motorStop();
 	}
+	
+	/** Stop all motor activity */
+	public static void stop() {
+		motorStop();
+	}
+	
+	/** Command a full, immediate, stop and abort any thread waits */
+	public static void fullStop() throws InterruptedException {
+		motorStop();
+		throw new InterruptedException();
+	}
 
 }
-
-/*
- * Modeline for ViM {{{ vim: set ts=4: vim600: fdm=marker fdl=0 fdc=3: }}}
- */
 

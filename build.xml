@@ -48,7 +48,6 @@
 		<exec executable="${rcx.bin.dir}/lejos" dir="${classes.dir}">
 			<arg value="${main-class}" />
 		</exec>
-		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true" />
 	</target>
 
 	<!-- Build everything and upload if the build is clean -->

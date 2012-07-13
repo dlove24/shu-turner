@@ -1,8 +1,5 @@
-import josx.platform.rcx.Sensor;
-import josx.platform.rcx.SensorConstants;
-
 /*
- * Turner.java
+ * Move.java
  *
  * Developed by David Love <d.love@shu.ac.uk>
  * Copyright (c) 2012 Sheffield Hallam University
@@ -25,32 +22,31 @@ import josx.platform.rcx.SensorConstants;
  *
  */
 
-public class Turner
-{
-  public static void main (String[] args) throws Exception
-  {
-	/* Set-up the forward and reverse bump sensors */
-	BumpListener frontBumper = new BumpListener();
-	BumpListener backBumper = new BumpListener();
-	
-	Sensor.S1.setTypeAndMode(SensorConstants.SENSOR_TYPE_TOUCH, SensorConstants.SENSOR_MODE_BOOL);
-	Sensor.S1.addSensorListener(backBumper);
-	Sensor.S1.activate();
-	
-	Sensor.S3.setTypeAndMode(SensorConstants.SENSOR_TYPE_TOUCH, SensorConstants.SENSOR_MODE_BOOL);
-	Sensor.S3.addSensorListener(frontBumper);
-	Sensor.S3.activate();
-	  
-	/* Enter the main movement loop */
-	  
-    Move.forward(5);
+import josx.platform.rcx.*;
 
-    Steer.hardRight(1);
+/**
+ * Simple bump sensor listener, commanding a motor full stop.
+ * 
+ * Creates a simple event handler for the SensorListener interface, which
+ * commands a full (movement) motor stop when fired. Also takes care of sensor
+ * noise and de-bounce routines.
+ * 
+ * @author David Love
+ * @version 0.0.1
+ */
 
-    Move.forward(5);
+public class BumpListener implements SensorListener {
 
-    Steer.hardLeft(1);
+	public void stateChanged(Sensor source, int oldValue, int newValue) {
+		/* Stop the motor */
+		Move.stop();
 
-    Move.backward(10);
-  }
+		/* Wait 0.025 seconds for the sensor to settle */
+		try {
+			Thread.sleep(25);
+		} catch (InterruptedException e) {
+			/* Not critical if this interrupt fails */
+		}
+	}
+
 }
