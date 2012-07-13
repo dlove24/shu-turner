@@ -1,6 +1,3 @@
-import josx.platform.rcx.Sensor;
-import josx.platform.rcx.SensorConstants;
-
 /*
  * Turner.java
  *
@@ -25,24 +22,82 @@ import josx.platform.rcx.SensorConstants;
  *
  */
 
-public class Turner
-{
-  public static void main (String[] args) throws Exception
-  {
-	/* Set-up the forward and reverse bump sensors */
-	BumpListener frontBumper = new BumpListener();
-	BumpListener backBumper = new BumpListener();
-	
-	Sensor.S1.setTypeAndMode(SensorConstants.SENSOR_TYPE_TOUCH, SensorConstants.SENSOR_MODE_BOOL);
-	Sensor.S1.addSensorListener(backBumper);
-	Sensor.S1.activate();
-	
-	Sensor.S3.setTypeAndMode(SensorConstants.SENSOR_TYPE_TOUCH, SensorConstants.SENSOR_MODE_BOOL);
-	Sensor.S3.addSensorListener(frontBumper);
-	Sensor.S3.activate();
-	  
-	/* Enter the main movement loop */
-	  
-    See.sense();
-  }
+import java.util.Random;
+
+import josx.platform.rcx.Motor;
+import josx.platform.rcx.Sensor;
+import josx.platform.rcx.SensorConstants;
+import josx.platform.rcx.TextLCD;
+
+public class Turner {
+	public static void main(String[] args) throws Exception {
+		/* Last brightest spot in the light-field */
+		int lastHigh = 0;
+
+		/* Current steering position */
+		int position = Steer.STEERING_NEUTRAL;
+
+		/* Initalise the random number generator */
+		Random generator = new Random();
+
+		/* Set-up the forward and reverse bump sensors */
+		BumpListener frontBumper = new BumpListener();
+		BumpListener backBumper = new BumpListener();
+
+		Sensor.S1.setTypeAndMode(SensorConstants.SENSOR_TYPE_TOUCH,
+				SensorConstants.SENSOR_MODE_BOOL);
+		Sensor.S1.addSensorListener(backBumper);
+		Sensor.S1.activate();
+
+		Sensor.S3.setTypeAndMode(SensorConstants.SENSOR_TYPE_TOUCH,
+				SensorConstants.SENSOR_MODE_BOOL);
+		Sensor.S3.addSensorListener(frontBumper);
+		Sensor.S3.activate();
+
+		/* Activate the 'eye' */
+		Sensor.S2.setTypeAndMode(SensorConstants.SENSOR_TYPE_LIGHT,
+				SensorConstants.SENSOR_MODE_RAW);
+		Sensor.S2.activate();
+
+		/* Activate the tail light */
+		Motor.B.forward();
+
+		/* Enter the main movement loop */
+		for (int i = 0; i < 30; i++) {
+			See.sense();
+
+			/* Is this bright spot brighter than the last? */
+			if (See.brightSpot() > (lastHigh - 100)) {
+				/* Yes, so move towards it */
+				lastHigh = See.brightSpot();
+
+				position = See.moveTo();
+				TextLCD.print(Integer.toString(position));
+				Steer.absPosition(position);
+
+				int time = generator.nextInt(1000);
+				Move.forward(time);
+			} else {
+				/*
+				 * No, move backwards to see if we can find a new bright spot
+				 */
+				position = See.moveTo();
+				TextLCD.print(Integer.toString(position));
+				Steer.absPosition(position);
+
+				int time = generator.nextInt(1000);
+				Move.backward(time);
+			}
+
+		}
+
+		/* Reset at the end */
+		Steer.reset();
+
+		Motor.B.stop();
+
+		Sensor.S1.passivate();
+		Sensor.S2.passivate();
+		Sensor.S3.passivate();
+	}
 }

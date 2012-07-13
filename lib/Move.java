@@ -18,11 +18,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Changelog:
- * 2012-07-11 - created
+ * 2012-07-11 - Created
+ * 2012-07-12 - Change the forward() and backward() time values to milliseconds
  *
  */
 
-import josx.platform.rcx.*;
+import josx.platform.rcx.Motor;
+import josx.platform.rcx.Sound;
 
 /**
  * Move object (class) for Turner
@@ -32,7 +34,7 @@ import josx.platform.rcx.*;
  * methods, and should be used in the same manner as the default classes.
  * 
  * @author David Love
- * @version 0.0.2
+ * @version 0.1.2
  */
 
 public class Move {
@@ -68,11 +70,11 @@ public class Move {
 	//
 
 	/** Move forward for 'seconds' */
-	public static void forward(int seconds) {
+	public static void forward(int milliseconds) {
 		motorForward();
 
 		try {
-			Thread.sleep(seconds * 1000);
+			Thread.sleep(milliseconds);
 		} catch (InterruptedException e) {
 			/* Indicate something went wrong */
 			Sound.systemSound(false, 4);
@@ -82,11 +84,11 @@ public class Move {
 	}
 
 	/** Turn hard left for 'seconds' */
-	public static void backward(int seconds) {
+	public static void backward(int milliseconds) {
 		motorBackward();
 
 		try {
-			Thread.sleep(seconds * 1000);
+			Thread.sleep(milliseconds);
 		} catch (InterruptedException e) {
 			/* Indicate something went wrong */
 			Sound.systemSound(false, 4);

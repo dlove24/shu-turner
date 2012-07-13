@@ -22,7 +22,8 @@
  *
  */
 
-import josx.platform.rcx.*;
+import josx.platform.rcx.Sensor;
+import josx.platform.rcx.SensorListener;
 
 /**
  * Simple bump sensor listener, commanding a motor full stop.

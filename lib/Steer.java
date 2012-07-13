@@ -22,7 +22,7 @@
  *
  */
 
-import josx.platform.rcx.*;
+import josx.platform.rcx.Motor;
 
 /**
  * Steer object (class) for Turner
@@ -37,9 +37,9 @@ import josx.platform.rcx.*;
  */
 
 public class Steer {
-	/**
-	 ** Class Types
-	 */
+	///
+	/// Class Types
+	///
 
 	/*
 	 * Enumeration of the SteeringState.
@@ -61,15 +61,15 @@ public class Steer {
 	private static final byte MOTOR_LEFT_COMMAND_TIME = 50;
 	private static final byte MOTOR_RIGHT_COMMAND_TIME = 50;
 
-	/**
-	 ** Class Variables
-	 */
+	///
+	/// Class Variables
+	///
 
 	protected static byte steeringState = STEERING_NEUTRAL;
 
-	/**
-	 ** Private methods
-	 */
+	///
+	/// Private methods
+	///
 
 	/** Turn the motor left */
 	private static void motorLeft() {
@@ -285,9 +285,9 @@ public class Steer {
 		}
 	}
 
-	/**
-	 ** Public methods
-	 */
+	///
+	/// Public methods
+	///
 
 	/** Turn hard left */
 	public static void hardLeft() {
