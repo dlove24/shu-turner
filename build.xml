@@ -57,4 +57,9 @@
 	     means we don't try to upload everything on autocompile -->
 	<target name="build-only" depends="compile" />
 
+	<!-- Load the firmware -->
+	<target name="load-firmware">
+		<exec executable="${rcx.bin.dir}/firmdl" />
+	</target>
+
 </project>
