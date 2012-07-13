@@ -43,14 +43,6 @@ public class Turner
 	  
 	/* Enter the main movement loop */
 	  
-    Move.forward(5);
-
-    Steer.hardRight(1);
-
-    Move.forward(5);
-
-    Steer.hardLeft(1);
-
-    Move.backward(10);
+    See.sense();
   }
 }

@@ -32,7 +32,7 @@ import josx.platform.rcx.*;
  * methods, and should be used in the same manner as the default classes.
  * 
  * @author David Love
- * @version 0.0.1
+ * @version 0.0.2
  */
 
 public class Move {

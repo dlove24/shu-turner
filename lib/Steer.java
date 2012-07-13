@@ -33,7 +33,7 @@ import josx.platform.rcx.*;
  * default classes.
  * 
  * @author David Love
- * @version 0.0.1
+ * @version 0.1.2
  */
 
 public class Steer {
@@ -289,56 +289,29 @@ public class Steer {
 	 ** Public methods
 	 */
 
-	/* Turn left for 'seconds' */
-	public static void left(int seconds) {
-		steerLeft();
-
-		try {
-			Thread.sleep(seconds * 1000);
-		} catch (InterruptedException e) {
-			/* Not sure where the motor is now !! */
-			steeringState = STEERING_INVALID;
-		}
-		steerReset();
-	}
-
-	/* Turn hard left for 'seconds' */
-	public static void hardLeft(int seconds) {
+	/* Turn hard left */
+	public static void hardLeft() {
 		steerHardLeft();
+	}
 
-		try {
-			Thread.sleep(seconds * 1000);
-		} catch (InterruptedException e) {
-			/* Not sure where the motor is now !! */
-			steeringState = STEERING_INVALID;
-		}
+	/* Turn left */
+	public static void left() {
+		steerLeft();
+	}
+
+	/* Put the steering motor in the neutral position */
+	public static void reset() {
 		steerReset();
 	}
 
-	/* Turn right for 'seconds' */
-	public static void right(int seconds) {
+	/* Turn right */
+	public static void right() {
 		steerRight();
-
-		try {
-			Thread.sleep(seconds * 1000);
-		} catch (InterruptedException e) {
-			/* Not sure where the motor is now !! */
-			steeringState = STEERING_INVALID;
-		}
-		steerReset();
 	}
 
 	/* Turn hard right for 'seconds' */
-	public static void hardRight(int seconds) {
+	public static void hardRight() {
 		steerHardRight();
-
-		try {
-			Thread.sleep(seconds * 1000);
-		} catch (InterruptedException e) {
-			/* Not sure where the motor is now !! */
-			steeringState = STEERING_INVALID;
-		}
-		steerReset();
 	}
 
 }
