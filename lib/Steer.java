@@ -33,7 +33,7 @@ import josx.platform.rcx.*;
  * default classes.
  * 
  * @author David Love
- * @version 0.1.2
+ * @version 0.1.3
  */
 
 public class Steer {
@@ -46,20 +46,20 @@ public class Steer {
 	 * 
 	 * NOTE: We don't have enum in the embedded Java
 	 */
-	public static final byte STEERING_HARD_RIGHT = 2;
+	public static final byte STEERING_HARD_RIGHT = 0;
 	public static final byte STEERING_RIGHT = 1;
-	public static final byte STEERING_NEUTRAL = 0;
-	public static final byte STEERING_LEFT = -1;
-	public static final byte STEERING_HARD_LEFT = -2;
-	public static final byte STEERING_INVALID = -4;
+	public static final byte STEERING_NEUTRAL = 2;
+	public static final byte STEERING_LEFT = 3;
+	public static final byte STEERING_HARD_LEFT = 4;
+	public static final byte STEERING_INVALID = -1;
 
 	/*
 	 * Time (in milliseconds) of the motor movements commanding left and right.
 	 * These should be adjusted so that a left followed by a right (or vice
 	 * versa) leave the motor in the neutral position
 	 */
-	private static final byte MOTOR_LEFT_COMMAND_TIME = 60;
-	private static final byte MOTOR_RIGHT_COMMAND_TIME = 40;
+	private static final byte MOTOR_LEFT_COMMAND_TIME = 50;
+	private static final byte MOTOR_RIGHT_COMMAND_TIME = 50;
 
 	/**
 	 ** Class Variables
@@ -71,7 +71,7 @@ public class Steer {
 	 ** Private methods
 	 */
 
-	/* Turn the motor left */
+	/** Turn the motor left */
 	private static void motorLeft() {
 		Motor.A.forward();
 
@@ -85,7 +85,7 @@ public class Steer {
 		Motor.A.stop();
 	}
 
-	/* Turn the motor right */
+	/** Turn the motor right */
 	private static void motorRight() {
 		Motor.A.backward();
 		try {
@@ -97,7 +97,7 @@ public class Steer {
 		Motor.A.stop();
 	}
 
-	/*
+	/**
 	 * Put the motor in the correct position to steer to hard left, based on the
 	 * current, assumed position of the motor
 	 */
@@ -134,7 +134,7 @@ public class Steer {
 		}
 	}
 
-	/*
+	/**
 	 * Put the motor in the correct position to steer to the left, based on the
 	 * current assumed position of the motor
 	 */
@@ -171,7 +171,7 @@ public class Steer {
 		}
 	}
 
-	/*
+	/**
 	 * Put the motor in the neutral steering position based on the current
 	 * assumed position of the motor
 	 */
@@ -208,7 +208,7 @@ public class Steer {
 		}
 	}
 
-	/*
+	/**
 	 * Put the motor in the correct position to steer to the right, based on the
 	 * current assumed position of the motor
 	 */
@@ -245,7 +245,7 @@ public class Steer {
 		}
 	}
 
-	/*
+	/**
 	 * Put the motor in the correct position to steer to hard right, based on
 	 * the current assumed position of the motor
 	 */
@@ -289,29 +289,45 @@ public class Steer {
 	 ** Public methods
 	 */
 
-	/* Turn hard left */
+	/** Turn hard left */
 	public static void hardLeft() {
 		steerHardLeft();
 	}
 
-	/* Turn left */
+	/** Turn left */
 	public static void left() {
 		steerLeft();
 	}
 
-	/* Put the steering motor in the neutral position */
+	/** Put the steering motor in the neutral position */
 	public static void reset() {
 		steerReset();
 	}
 
-	/* Turn right */
+	/** Turn right */
 	public static void right() {
 		steerRight();
 	}
 
-	/* Turn hard right for 'seconds' */
+	/** Turn hard right */
 	public static void hardRight() {
 		steerHardRight();
+	}
+
+	/** Move the wheels to the stated position */
+	public static void absPosition(int position) {
+
+		if (position == STEERING_HARD_RIGHT) {
+			steerHardRight();
+		} else if (position == STEERING_RIGHT) {
+			steerRight();
+		} else if (position == STEERING_NEUTRAL) {
+			steerReset();
+		} else if (position == STEERING_LEFT) {
+			steerLeft();
+		} else if (position == STEERING_HARD_LEFT) {
+			steerHardLeft();
+		}
 	}
 
 }
